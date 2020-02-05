@@ -45,6 +45,8 @@ function op_form(){
 
 function logout(){
   $_SESSION['admin']="";
+  setcookie("name", "", time()- 3600 * 24 * 365); 
+  setcookie("token", "", time()- 3600 * 24 * 365);
 }
 //登出 網址後須自己輸入...user.php/?op=logout 才會登出
 
@@ -52,21 +54,23 @@ function login(){
   global $smarty;
   $name="admin";
   $pass="111111";
+  $token="xxxxxx";
  
   if($name == $_POST['name'] and $pass == $_POST['pass']){
-    $_SESSION['admin'] = true;     
+    $_SESSION['admin'] = true; 
+    $_POST['remember'] = isset($_POST['remember']) ? $_POST['remember'] : "";
+    
+    if($_POST['remember']){
+      setcookie("name", $name, time()+ 3600 * 24 * 365); 
+      setcookie("token", $token, time()+ 3600 * 24 * 365); 
+    }
+
     header("location:index.php");//注意前面不可以有輸出
-      // echo "您是管理員";
-      // die();
   }else{      
     header("location:user.php");//注意前面不可以有輸出
   }
- 
- 
-  //print_r($_POST);
-  var_dump($_POST);
-  DIE();
 }
+ 
   
 function op_list(){
   global $smarty;

@@ -11,6 +11,14 @@ if (!empty($_SERVER['HTTPS'])) {
   $http = ($_SERVER['HTTPS'] == 'on') ? 'https://' : 'http://';
 }
  
+// 為了cookie使用
+if(!$_SESSION['admin']){
+  $_COOKIE['token'] = isset($_COOKIE['token']) ? $_COOKIE['token'] : "";
+  $_COOKIE['name'] = isset($_COOKIE['name']) ? $_COOKIE['name'] : "";
+  if($_COOKIE['name'] == "admin" and $_COOKIE['token'] == "xxxxxx"){
+    $_SESSION['admin'] = true;
+  }
+}
 #網站實體路徑(不含 /)
 define('_WEB_PATH', str_replace("\\", "/", dirname(__FILE__)));
  
